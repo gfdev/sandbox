@@ -4,6 +4,7 @@ use 5.010;
 
 use Data::Dumper; 
 use Mojo::UserAgent;
+use Mojo::IOLoop::Delay;
 
 my $ua = Mojo::UserAgent->new(max_redirects => 5);
 
@@ -17,3 +18,29 @@ $ua->proxy->detect;
 #$req->headers->connection('keep-alive');
 #$req->headers->cache_control('no-cache');
 #$bot->enqueue('https://m.facebook.com');
+
+Mojo::IOLoop->recurring(1 => sub {
+    say 'Main loop: ', time;
+    
+    Mojo::IOLoop->timer(1 => sub {
+        say 'Sub loop: ', time;
+    });
+});
+
+Mojo::IOLoop->start unless Mojo::IOLoop->is_running;
+
+#my $ticker = Mojo::IOLoop->recurring(0.5 => sub { warn "tick\n" });
+#
+#my $value;
+#my $delay = Mojo::IOLoop->delay(
+#    sub {
+#        Mojo::IOLoop->timer(2 => shift->begin);
+#    },
+#    sub {
+#        warn "timer fired\n";
+#        $value = 'foobar';
+#    }
+#);
+#warn "value not set yet (value = '$value')\n";
+#$delay->wait;
+#warn "value set now (value = '$value')\n";
