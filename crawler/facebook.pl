@@ -43,7 +43,7 @@ $ua->on(start => sub {
         say shift->to_string;
     });
     $tx->res->on(finish => sub {
-        #say shift->to_string, "\n\n";
+        say shift->to_string, "\n\n";
         
         store $ua->cookie_jar, $cookie_file;
     });
@@ -98,18 +98,19 @@ while (my $url = shift @links) {
         /profile/ && do {
             ($path) = $content =~ m{<a[^>]+href="([^"]+)">Friends</a>}s;
             
-            my ($user_id)   = $content =~ m{<a[^>]+href="[^"]+owner_id=(\d+)[^"]+">More</a>}si;
-            $user_id      ||= 0;
-            my ($name)      = $content =~ m{<div[^>]+><span><strong[^>]+>([^<]+)</strong>}si;
-            my ($user_name) = $link    =~ m{/([^/]+)\?}si;
-            $user_name      = $user_name eq 'profile.php' ? '' : $user_name;
-            my ($feed)      = $content =~ m{(<div[^>]+id="recent">.*?>Report</a></div></div></div></div></div></div>)}si;
+            my ($user_id)         = $content =~ m{<a[^>]+href="[^"]+owner_id=(\d+)[^"]+">More</a>}si;
+            $user_id            ||= 0;
+            my ($name, $name_alt) = $content =~ m{<div[^>]+><span><strong[^>]+>([^<]+)(?:<span[^>]*?>([^<]+)</span>)?</strong>}si;
+            $name_alt           ||= '';
+            my ($user_name)       = $link    =~ m{/([^/]+)\?}si;
+            $user_name            = $user_name eq 'profile.php' ? '' : $user_name;
+            my ($feed)            = $content =~ m{(<div[^>]+id="recent">.*?>Report</a></div></div></div></div></div></div>)}si;
             
             open my $fh_feed, '>', $user_id . '_feed.txt' or die "Cannot open file for writing: $!";
-                print $fh_feed $feed;
+                print $fh_feed ($feed || '');
             close $fh_feed;
             
-            print $fh_users join(',', $user_id || '0', $user_name, $name) . "\n";
+            print $fh_users join(',', $user_id || '0', $name_alt ? "$user_name ($name_alt)" : $user_name, $name) . "\n";
             
             _add_link($path, $link, { user_id => $user_id, user_name => $user_name })
                 if $path;
@@ -132,8 +133,8 @@ while (my $url = shift @links) {
                     'ProfileURL: ' . ($2 || ''),
                     'ID: ' . ($id || ''),
                     'Name: ' . ($4 || ''),
-                    'FriendName: ' . ($url->{user_name} || ''),
-                    "FriendID: @{[ $url->{user_id} || '' ]}\n\n"
+                    'ParentFriendName: ' . ($url->{user_name} || ''),
+                    "ParentFriendID: @{[ $url->{user_id} || '' ]}\n\n"
                 );
                 
                 _add_link($2, $link) if $2 && not $url->{user_id};
@@ -161,7 +162,7 @@ sub _add_link {
     my $hash   = md5_hex $url;
     
     if (not exists $seen{$hash}) {
-        push @links, { url => $url, ref => $ref, ($params ? (params => $params) : ()) };
+        push @links, { url => $url, ref => $ref, ($params ? %$params : ()) };
         
         $seen{$hash}++;
     
