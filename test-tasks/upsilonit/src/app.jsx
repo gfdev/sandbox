@@ -7,5 +7,5 @@ require('leaflet/dist/leaflet.css');
 
 angular.module('app', [ 'leaflet-directive' ])
     .controller('MapController', [ '$scope', function($scope) {
-        
+
     }]);
