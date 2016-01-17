@@ -5,8 +5,7 @@ require('angular-leaflet-directive');
 require('bootstrap/dist/css/bootstrap.css');
 require('leaflet/dist/leaflet.css');
 
-var app = angular.module('app', [ 'leaflet-directive' ]);
-
-app.controller('MapController', [ '$scope', function($scope) {
-
-}]);
+angular.module('app', [ 'leaflet-directive' ])
+    .controller('MapController', [ '$scope', function($scope) {
+        
+    }]);

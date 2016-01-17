@@ -12,6 +12,9 @@ module.exports = {
         filename: '[hash].js'
     },
     module: {
+        preLoaders: [
+            { test: /\.jsx?$/, include: src, loader: 'eslint' }
+        ],
         loaders: [
             { test: require.resolve("angular"), loader: "expose?angular" },
             { test: require.resolve("angular-leaflet-directive"), loader: "imports?angular" },
