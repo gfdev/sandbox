@@ -7,7 +7,7 @@
     "test": "mocha --harmony --require babel-core/register",
     "dist": "rm -rf dist && webpack",
     "dev": "webpack-dev-server --config webpack.config.dev.js --inline --hot --watch-poll",
-    "deploy": "npm run dist && cd ../.. && git subtree push --prefix test-tasks/upsilonit/dist origin gh-pages"
+    "gh-pages": "npm run dist && cd ../.. && git subtree push --prefix test-tasks/upsilonit/dist origin gh-pages"
   },
   "author": {
     "name": "Gordon Freeman",
@@ -35,8 +35,6 @@
     "imports-loader": "^0.6.5",
     "leaflet": "^0.7.7",
     "mocha": "^2.3.4",
-    "node-sass": "^3.4.2",
-    "sass-loader": "^3.1.2",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.11",
