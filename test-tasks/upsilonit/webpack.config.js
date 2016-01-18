@@ -17,8 +17,9 @@ module.exports = {
         ],
         loaders: [
             { test: require.resolve("angular"), loader: "expose?angular" },
-            { test: require.resolve("angular-leaflet-directive"), loader: "imports?angular" },
+            { test: /angular[\w.-]+\.js$/i, loader: "imports?angular" },
             { test: /\.jsx$/, include: src, loader: 'babel?cacheDirectory' },
+            { test: /\.html$/, include: src, loader: 'html' },
             { test: /\.css$/i, loader: 'style!css!autoprefixer' },
             { test: /\.(?:jpe?g|png|gif|svg|eot|ttf|woff\d?|otf)$/, loader: 'url?limit=' + 1024 * 1024 * 10 }
         ]
