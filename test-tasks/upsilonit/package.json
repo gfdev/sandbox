@@ -1,12 +1,12 @@
 {
   "name": "app",
   "version": "0.0.1",
-  "description": ".",
+  "description": "UpsilonIT test task",
   "main": "index.js",
   "scripts": {
     "test": "mocha --harmony --require babel-core/register",
-    "dist": "rm -rf dist && webpack",
-    "dev": "webpack-dev-server --config webpack.config.dev.js --inline --hot --watch-poll",
+    "dist": "rm -rf dist && NODE_ENV=production webpack",
+    "dev": "webpack-dev-server --inline --hot --watch-poll",
     "gh-pages": "npm run dist && cd ../.. && git subtree push --prefix test-tasks/upsilonit/dist origin gh-pages",
     "deploy": "npm run dist && git add dist/ && npm run gh-pages"
   },
