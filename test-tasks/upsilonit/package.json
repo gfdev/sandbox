@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --harmony --require babel-core/register",
-    "dist": "rm -rf dist && NODE_ENV=production webpack && git add dist/",
+    "dist": "rm -rf dist && NODE_ENV=production webpack && git add -A dist/ && git commit --allow-empty-message -m '' dist/",
     "dev": "webpack-dev-server --inline --hot --watch-poll",
     "gh-pages": "npm run dist && cd ../.. && git subtree push --prefix test-tasks/upsilonit/dist origin gh-pages",
     "deploy": "npm run dist && npm run gh-pages"
