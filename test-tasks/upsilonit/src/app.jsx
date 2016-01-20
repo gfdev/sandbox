@@ -51,7 +51,7 @@ angular.module('app', [ 'ngRoute', 'leaflet-directive' ])
             get: function() {
                 if (store) return store;
 
-                return srvHeadHunter.fetch('dictionaries').then(function(data) {
+                return srvHeadHunter.fetch('dictionaries').then(data => {
                     store = data;
 
                     return data;
@@ -59,7 +59,7 @@ angular.module('app', [ 'ngRoute', 'leaflet-directive' ])
             }
         };
     }])
-    .factory('srvSearch', ['srvHeadHunter', function(srvHeadHunter) {
+    .factory('srvSearch', [ 'srvHeadHunter', function(srvHeadHunter) {
         var defaults = {
             per_page: 100,
             enable_snippets: false,
@@ -95,7 +95,7 @@ angular.module('app', [ 'ngRoute', 'leaflet-directive' ])
                         }
                     },
                     overlays: {
-                        realworld: {
+                        vacancies: {
                             name: "Vacancies",
                             type: "markercluster",
                             visible: true
@@ -123,7 +123,7 @@ angular.module('app', [ 'ngRoute', 'leaflet-directive' ])
                             $scope.markers = data.items.map(val => {
                                 return {
                                     message: val.name,
-                                    layer: 'realworld',
+                                    layer: 'vacancies',
                                     lat: val.address.lat,
                                     lng: val.address.lng
                                 }
