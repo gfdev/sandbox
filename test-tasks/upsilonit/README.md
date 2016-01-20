@@ -1,1 +1,13 @@
 # test app
+
+## dev server on 3000 port
+```bash
+$ npm run dev
+```
+
+## build
+```bash
+$ npm run dist
+```
+
+## working result [http://gfdev.github.io/sandbox]
