@@ -2,50 +2,111 @@ require('expose?L!leaflet');
 
 require('angular');
 require('angular-route');
-//require('angular-resource');
 require('angular-leaflet-directive');
 
 require('bootstrap/dist/css/bootstrap.css');
 require('leaflet/dist/leaflet.css');
 
 angular.module('app', [ 'ngRoute', 'leaflet-directive' ])
-    .config(function($routeProvider, $httpProvider) {
-        $httpProvider.defaults.useXDomain = true;
-
-        delete $httpProvider.defaults.headers.common['X-Requested-With'];
-        //$httpProvider.interceptors.push('redirectInterceptor');
-
-        var resolveVacancies = {
-            vacancies: function (HH) {
-                return HH.search();
-            }
-        };
-
+    .value('apiURL', 'https://api.hh.ru/')
+    .config(function($routeProvider) {
         $routeProvider
-            .when('/', {
-                controller: 'MapController as projectList',
-                template: require('./map.html'),
-                resolve: resolveVacancies
+            .when('/map', {
+                controller: 'Ctrl',
+                template: require('map.html'),
+                resolve: {
+                    dictionary: [ 'srvDictionary', function(srvDictionary) {
+                        return srvDictionary.get();
+                    }]
+                }
             })
             .otherwise({
-                redirectTo: '/'
+                redirectTo: '/map'
             });
     })
-    .service('HH', ['$http','$q', function($http, $q) {
-        this.search = function() {
-            var deferred = $q.defer();
+    .service('srvHeadHunter', [ '$http','$q', 'apiURL', function($http, $q, apiURL) {
+        this.fetch = function(endpoint, params) {
+            var dfd = $q.defer();
 
-            $http.get('http://hh.ru/shards/searchvacancymap?top_right_lat=54.02979493800219&items_on_page=100&bottom_left_lat=53.698611658494&top_right_lng=28.616075614310958&label=with_address&text=javascript&enable_snippets=true&salary=&bottom_left_lng=26.308946708060958&clusters=true&isMap=true&_=1448885030019').then(function(response) {
+            $http.get(apiURL + endpoint, {
+                params: angular.extend({}, params)
+            }).then(response => {
                 if (response.status == 200) {
-                    deferred.resolve(response.data);
+                    dfd.resolve(response.data);
                 } else {
-                    deferred.reject('Error retrieving user info');
+                    dfd.reject('Error retrieving data!');
                 }
             });
 
-            return deferred.promise;
+            return dfd.promise;
         }
     }])
-    .controller('MapController', [ '$scope', function($scope) {
+    .factory('srvDictionary', [ 'srvHeadHunter', function(HH) {
+        var store;
 
-    }]);
+        return {
+            get: function() {
+                if (store) return store;
+
+                return HH.fetch('dictionaries').then(function(data) {
+                    store = data;
+
+                    return data;
+                });
+            }
+        };
+    }])
+    .factory('srvSearch', ['srvHeadHunter', function(HH) {
+        var defaults = {
+            per_page: 100,
+            enable_snippets: true,
+            label: 'with_address',
+            clusters: false,
+            isMap: true
+        };
+
+        return {
+            get: function(query, area) {
+                return HH.fetch('vacancies', angular.extend(defaults, query, area));
+            }
+        };
+    }])
+    .controller('Ctrl', [ '$scope', 'srvSearch', 'leafletData', 'dictionary',
+        function($scope, srvSearch, leafletData, dictionary) {
+            angular.extend($scope, {
+                minsk: {
+                    lat: 53.90150637113244,
+                    lng: 27.547874450683594,
+                    zoom: 11
+                }
+            });
+
+            $scope.dict = dictionary;
+
+            $scope.search = function() {
+                leafletData.getMap().then(map => {
+                    var bounds = map.getBounds();
+
+                    srvSearch.get($scope.query, _convertBoundsToParams(bounds)).then(data => {
+                        if (angular.isArray(data.items))
+                            $scope.markers = data.items.map(val => {
+                                return {
+                                    message: val.name,
+                                    lat: val.address.lat,
+                                    lng: val.address.lng
+                                }
+                            }).filter(val => val.lat !== null && val.lng !== null);
+                    });
+                });
+            };
+
+            function _convertBoundsToParams(bounds) {
+                return {
+                    bottom_lat: bounds.getSouth(),
+                    left_lng: bounds.getWest(),
+                    top_lat: bounds.getNorth(),
+                    right_lng: bounds.getEast()
+                }
+            }
+        }
+    ]);
