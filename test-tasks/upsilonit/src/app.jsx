@@ -1,4 +1,5 @@
 require('expose?L!leaflet');
+require('script!leaflet.markercluster');
 
 require('angular');
 require('angular-route');
@@ -6,10 +7,12 @@ require('angular-leaflet-directive');
 
 require('bootstrap/dist/css/bootstrap.css');
 require('leaflet/dist/leaflet.css');
+require('leaflet.markercluster/dist/MarkerCluster.css');
+require('leaflet.markercluster/dist/MarkerCluster.Default.css');
 
 angular.module('app', [ 'ngRoute', 'leaflet-directive' ])
     .value('apiURL', 'https://api.hh.ru/')
-    .config(function($routeProvider) {
+    .config([ '$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/map', {
                 controller: 'Ctrl',
@@ -23,7 +26,7 @@ angular.module('app', [ 'ngRoute', 'leaflet-directive' ])
             .otherwise({
                 redirectTo: '/map'
             });
-    })
+    }])
     .service('srvHeadHunter', [ '$http','$q', 'apiURL', function($http, $q, apiURL) {
         this.fetch = function(endpoint, params) {
             var dfd = $q.defer();
@@ -41,14 +44,14 @@ angular.module('app', [ 'ngRoute', 'leaflet-directive' ])
             return dfd.promise;
         }
     }])
-    .factory('srvDictionary', [ 'srvHeadHunter', function(HH) {
+    .factory('srvDictionary', [ 'srvHeadHunter', function(srvHeadHunter) {
         var store;
 
         return {
             get: function() {
                 if (store) return store;
 
-                return HH.fetch('dictionaries').then(function(data) {
+                return srvHeadHunter.fetch('dictionaries').then(function(data) {
                     store = data;
 
                     return data;
@@ -56,10 +59,10 @@ angular.module('app', [ 'ngRoute', 'leaflet-directive' ])
             }
         };
     }])
-    .factory('srvSearch', ['srvHeadHunter', function(HH) {
+    .factory('srvSearch', ['srvHeadHunter', function(srvHeadHunter) {
         var defaults = {
             per_page: 100,
-            enable_snippets: true,
+            enable_snippets: false,
             label: 'with_address',
             clusters: false,
             isMap: true
@@ -67,7 +70,11 @@ angular.module('app', [ 'ngRoute', 'leaflet-directive' ])
 
         return {
             get: function(query, area) {
-                return HH.fetch('vacancies', angular.extend(defaults, query, area));
+                var params = angular.extend(defaults, query, area);
+
+                if (query.salary) params.only_with_salary = true;
+
+                return srvHeadHunter.fetch('vacancies', params);
             }
         };
     }])
@@ -78,12 +85,36 @@ angular.module('app', [ 'ngRoute', 'leaflet-directive' ])
                     lat: 53.90150637113244,
                     lng: 27.547874450683594,
                     zoom: 11
+                },
+                layers: {
+                    baselayers: {
+                        osm: {
+                            name: 'OpenStreetMap',
+                            type: 'xyz',
+                            url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                        }
+                    },
+                    overlays: {
+                        realworld: {
+                            name: "Vacancies",
+                            type: "markercluster",
+                            visible: true
+                        }
+                    }
                 }
             });
 
             $scope.dict = dictionary;
 
+            $scope.$on('leafletDirectiveMap.moveend', function() {
+                $scope.search();
+            });
+
             $scope.search = function() {
+                if (!$scope.query) return;
+
+                $scope.submited = true;
+
                 leafletData.getMap().then(map => {
                     var bounds = map.getBounds();
 
@@ -92,10 +123,13 @@ angular.module('app', [ 'ngRoute', 'leaflet-directive' ])
                             $scope.markers = data.items.map(val => {
                                 return {
                                     message: val.name,
+                                    layer: 'realworld',
                                     lat: val.address.lat,
                                     lng: val.address.lng
                                 }
                             }).filter(val => val.lat !== null && val.lng !== null);
+
+                        $scope.submited = false;
                     });
                 });
             };

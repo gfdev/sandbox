@@ -1,14 +1,14 @@
 {
   "name": "app",
   "version": "0.0.1",
-  "description": "UpsilonIT test task",
+  "description": "UpsilonIT Test Task",
   "main": "index.js",
   "scripts": {
     "test": "mocha --harmony --require babel-core/register",
-    "dist": "rm -rf dist && NODE_ENV=production webpack",
+    "dist": "rm -rf dist && NODE_ENV=production webpack && git add dist/",
     "dev": "webpack-dev-server --inline --hot --watch-poll",
     "gh-pages": "npm run dist && cd ../.. && git subtree push --prefix test-tasks/upsilonit/dist origin gh-pages",
-    "deploy": "npm run dist && git add dist/ && npm run gh-pages"
+    "deploy": "npm run dist && npm run gh-pages"
   },
   "author": {
     "name": "Gordon Freeman",
@@ -37,7 +37,9 @@
     "html-webpack-plugin": "^1.7.0",
     "imports-loader": "^0.6.5",
     "leaflet": "^0.7.7",
+    "leaflet.markercluster": "^0.4.0",
     "mocha": "^2.3.4",
+    "script-loader": "^0.6.1",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.11",
