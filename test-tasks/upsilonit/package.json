@@ -4,9 +4,9 @@
   "description": "UpsilonIT Test Task",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --harmony --require babel-core/register",
-    "dist": "rm -rf dist/ && NODE_ENV=production webpack && git add -A dist/ && git commit --allow-empty-message -m '' dist/ && git push",
+    "dist": "rm -rf dist/ && NODE_ENV=production webpack && git add -A dist/",
     "dev": "webpack-dev-server --inline --hot --watch-poll",
+    "test": "mocha --harmony --require babel-core/register",
     "gh-pages": "npm run dist && cd ../.. && git subtree push --prefix test-tasks/upsilonit/dist origin gh-pages"
   },
   "author": {
