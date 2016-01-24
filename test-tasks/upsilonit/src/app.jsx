@@ -96,8 +96,8 @@ angular.module('app', [ 'ngRoute', 'leaflet-directive' ])
                     },
                     overlays: {
                         vacancies: {
-                            name: "Vacancies",
-                            type: "markercluster",
+                            name: 'Vacancies',
+                            type: 'markercluster',
                             visible: true
                         }
                     }
