@@ -10,4 +10,4 @@ $ npm run dev
 $ npm run dist
 ```
 
-## working result is http://gfdev.github.io/sandbox/test-tasks/upsilonit/dist
+## working result is http://gfdev.github.io/sandbox/test-tasks/upsilonit/dist/
