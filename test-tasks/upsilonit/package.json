@@ -7,7 +7,7 @@
     "dist": "rm -rf dist/ && NODE_ENV=production webpack",
     "dev": "webpack-dev-server --inline --hot --watch-poll",
     "test": "mocha --harmony --require babel-core/register",
-    "gh-pages": "GITROOT=`git rev-parse --show-toplevel` && WD=`pwd` && SUBPATH=\"${WD#$GITROOT/}/dist\" && cd $GITROOT && git push origin :gh-pages && git checkout --orphan gh-pages && git rm -rf . && git checkout master $SUBPATH && git commit --allow-empty-message -a -m '' && git push origin gh-pages && git checkout master && git branch -D gh-pages && cd $WD && unset GITROOT WD SUBPATH"
+    "gh-pages": "[ -d \"dist/\" ] && GITROOT=`git rev-parse --show-toplevel` && WD=`pwd` && SUBPATH=\"${WD#$GITROOT/}/dist\" && cd $GITROOT && git push origin :gh-pages && git checkout --orphan gh-pages && git rm -rf . && git checkout master $SUBPATH && git commit --allow-empty-message -a -m '' && git push origin gh-pages && git checkout master && git branch -D gh-pages && cd $WD && unset GITROOT WD SUBPATH"
   },
   "author": {
     "name": "Gordon Freeman",
