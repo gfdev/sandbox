@@ -4,10 +4,10 @@
   "description": "UpsilonIT Test Task",
   "main": "index.js",
   "scripts": {
-    "dist": "rm -rf dist/ && NODE_ENV=production webpack && git add -A dist/",
+    "dist": "rm -rf dist/ && NODE_ENV=production webpack",
     "dev": "webpack-dev-server --inline --hot --watch-poll",
     "test": "mocha --harmony --require babel-core/register",
-    "gh-pages": "npm run dist && cd ../.. && git subtree push --prefix test-tasks/upsilonit/dist origin gh-pages"
+    "gh-pages": "GITROOT=`git rev-parse --show-toplevel` && WD=`pwd` && SUBPATH=\"${WD#$GITROOT/}/dist\" && cd $GITROOT && git push origin :gh-pages && git checkout --orphan gh-pages && git rm -rf . && git checkout master $SUBPATH && git commit --allow-empty-message -a -m '' && git push origin gh-pages && git checkout master && git branch -D gh-pages && cd $WD && unset GITROOT WD SUBPATH"
   },
   "author": {
     "name": "Gordon Freeman",
