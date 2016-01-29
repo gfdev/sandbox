@@ -1,0 +1,44 @@
+{
+  "name": "app",
+  "version": "0.0.1",
+  "description": "ReactJS Test Task",
+  "main": "index",
+  "scripts": {
+    "dist": "rm -rf dist/ && NODE_ENV=production webpack",
+    "build": "rm -rf build/ && webpack",
+    "dev": "webpack-dev-server --inline --hot --watch-poll",
+    "test": "mocha --harmony --require babel-core/register",
+    "gh-pages": "[ -d \"dist/\" ] && GITROOT=`git rev-parse --show-toplevel` && WD=`pwd` && SUBPATH=\"${WD#$GITROOT/}/dist\" && cd $GITROOT && git push origin :gh-pages && git checkout --orphan gh-pages && git rm -rf . && git checkout master $SUBPATH && git commit --allow-empty-message -a -m '' && git push origin gh-pages && git checkout master && git branch -D gh-pages && cd $WD && unset GITROOT WD SUBPATH"
+  },
+  "author": {
+    "name": "Gordon Freeman",
+    "email": "eax@gmx.us",
+    "url": "https://github.com/gfdev"
+  },
+  "devDependencies": {
+    "babel-core": "^6.4.5",
+    "babel-eslint": "^5.0.0-beta6",
+    "babel-loader": "^6.2.1",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "bootstrap": "^3.3.6",
+    "chai": "^3.4.1",
+    "css-loader": "^0.23.1",
+    "eslint": "^1.10.3",
+    "eslint-loader": "^1.2.0",
+    "eslint-plugin-react": "^3.16.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.8.5",
+    "html-webpack-plugin": "^2.7.1",
+    "mocha": "^2.3.4",
+    "postcss-loader": "^0.8.0",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-hot-loader": "^1.3.0",
+    "style-loader": "^0.13.0",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.12.11",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {}
+}
