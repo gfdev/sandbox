@@ -16,7 +16,7 @@ module.exports = {
         vendor: './vendor'
     },
     output: NODE_ENV === 'development'
-        ? { path: __dirname + '/build', filename: '[name].js', publickPath: 'http://0.0.0.0:3000/' }
+        ? { path: __dirname + '/build', filename: '[name].js', publickPath: '/' }
         : { path: __dirname + '/dist', filename: '[name].[hash].js' },
     resolve: {
         root: src,
