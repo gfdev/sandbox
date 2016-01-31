@@ -29,7 +29,7 @@ module.exports = {
         //],
         loaders: [
             { test: /\.jsx$/, include: src, loader: 'react-hot!babel?cacheDirectory' },
-            { test: /\.s?css$/i, loader: ExtractTextPlugin.extract('style', 'css!postcss') },
+            { test: /\.s?css$/i, loader: ExtractTextPlugin.extract('style', 'css!sass!postcss') },
             { test: /\.(?:jpe?g|png|gif|svg|eot|ttf|woff\d?|otf)$/, loader: 'url?limit=1&name=[name].[ext]?[hash]' } // + 1024 * 1024 * 10 }
         ]
     },
