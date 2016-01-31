@@ -184,7 +184,7 @@ const CallsList = React.createClass({
                         <thead>
                         <tr>
                             <th>
-                                <a href="#" onClick={() => { this.setState({ sort: 'name', asc: !this.state.asc }) }}>
+                                <a href="#" onClick={e => { e.preventDefault(); this.setState({ sort: 'name', asc: !this.state.asc }) }}>
                                     <Row>
                                         <Col xs={6}>Name</Col>
                                         <Col xs={6} style={{ textAlign: 'right' }}>
@@ -197,7 +197,7 @@ const CallsList = React.createClass({
                             </th>
                             <th>Phone number</th>
                             <th>
-                                <a href="#" onClick={() => { this.setState({ sort: 'time', asc: !this.state.asc }) }}>
+                                <a href="#" onClick={e => { e.preventDefault(); this.setState({ sort: 'time', asc: !this.state.asc }) }}>
                                     <Row>
                                         <Col xs={6}>Time</Col>
                                         <Col xs={6} style={{ textAlign: 'right' }}>
@@ -283,7 +283,9 @@ const App = React.createClass({
     componentWillUpdate(props, state) {
         storage('calls', state.calls.toJS());
     },
-    handleCallRemove(hash) {
+    handleCallRemove(hash, e) {
+        e.preventDefault();
+        
         let index = this.state.calls.findIndex(item => item.hashCode() == hash);
 
         this.setState({ calls: this.state.calls.remove(index), now: _getDaySeconds() });
