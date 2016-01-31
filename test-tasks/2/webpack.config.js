@@ -12,7 +12,7 @@ module.exports = {
     devtool: NODE_ENV === 'development' ? 'cheap-source-map' : null,
     watch:  NODE_ENV === 'development',
     entry: {
-        app: './app',
+        app: '../index',
         vendor: './vendor'
     },
     output: NODE_ENV === 'development'
@@ -24,9 +24,9 @@ module.exports = {
         modulesDirectories: [ 'node_modules' ]
     },
     module: {
-        //preLoaders: [
-        //    { test: /\.jsx?$/, include: src, loader: 'eslint' }
-        //],
+        preLoaders: [
+            { test: /\.jsx?$/, include: src, loader: 'eslint' }
+        ],
         loaders: [
             { test: /\.jsx$/, include: src, loader: 'react-hot!babel?cacheDirectory' },
             { test: /\.s?css$/i, loader: ExtractTextPlugin.extract('style', 'css!sass!postcss') },
@@ -63,7 +63,7 @@ module.exports = {
         }),
         new ExtractTextPlugin('[name]' + (NODE_ENV === 'development' ? '' : '.[contenthash]') + '.css', { allChunks: true })
     ].concat(NODE_ENV !== 'development'
-        ? new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false, disable: NODE_ENV === 'development' }})
+        ? new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false }})
         : []
     )
 };
