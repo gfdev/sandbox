@@ -3,7 +3,7 @@ require('./app.scss');
 let storage = require('amplify-store')
     , LinkedStateMixin = require('react-addons-linked-state-mixin')
     , { Grid, Row, Col, Panel, Button, Input, Table, Glyphicon } = require('react-bootstrap')
-    ;
+;
 
 function _getDaySeconds() {
     let now = new Date();
@@ -75,7 +75,7 @@ const CallsAdd = React.createClass({
         LinkedStateMixin
     ],
     getInitialState() {
-        return { name: 'Bob', phone: '0064654564', time: '15:41' };
+        return { name: '', phone: '', time: '' };
     },
     handleClickAdd() {
         if (!/^[a-z.\-'\s]{1,30}$/i.test(this.state.name)) {
@@ -285,7 +285,7 @@ const App = React.createClass({
     },
     handleCallRemove(hash, e) {
         e.preventDefault();
-        
+
         let index = this.state.calls.findIndex(item => item.hashCode() == hash);
 
         this.setState({ calls: this.state.calls.remove(index), now: _getDaySeconds() });
