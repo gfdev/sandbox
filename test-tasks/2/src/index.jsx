@@ -144,7 +144,7 @@ const CallsAdd = React.createClass({
                         </Input>
                     </Row>
                     <Row>
-                        <Col xs={10}></Col>
+                        <Col xs={10} />
                         <Col xs={2}>
                             <Button bsStyle="primary"
                                 onClick={this.handleClickAdd}
@@ -208,8 +208,8 @@ const CallsList = React.createClass({
                                     </Row>
                                 </a>
                             </th>
-                            <th></th>
-                            <th></th>
+                            <th />
+                            <th />
                         </tr>
                         </thead>
                         <tbody>
@@ -217,10 +217,10 @@ const CallsList = React.createClass({
                                 let hash = item.hashCode();
 
                                 return (
-                                    <tr key={hash }>
-                                        <td>{ item.get('name') }</td>
-                                        <td>{ _formatPhone(item.get('phone')) }</td>
-                                        <td>{ _formatTime(item.get('time')) }</td>
+                                    <tr key={hash}>
+                                        <td>{item.get('name')}</td>
+                                        <td>{_formatPhone(item.get('phone'))}</td>
+                                        <td>{_formatTime(item.get('time'))}</td>
                                         <td className="center">
                                             <a href="#" onClick={this.props.handleCallRemove.bind(null, hash)}>delete</a>
                                         </td>
@@ -236,7 +236,7 @@ const CallsList = React.createClass({
                 <Row>
                     <Col xs={4}>
                         <Button bsStyle="primary"
-                            onClick={() => { this.setState({ visibility: 'all' }) }}
+                            onClick={() => { this.setState({ visibility: 'all' }); }}
                             disabled={this.state.visibility === 'all'}
                             block>
                                 All
@@ -244,7 +244,7 @@ const CallsList = React.createClass({
                     </Col>
                     <Col xs={4}>
                         <Button bsStyle="primary"
-                            onClick={() => { this.setState({ visibility: 'next' }) }}
+                            onClick={() => { this.setState({ visibility: 'next' }); }}
                             disabled={this.state.visibility === 'next'}
                             block>
                                 Next
@@ -252,7 +252,7 @@ const CallsList = React.createClass({
                     </Col>
                     <Col xs={4}>
                         <Button bsStyle="primary"
-                            onClick={() => { this.setState({ visibility: 'finished' }) }}
+                            onClick={() => { this.setState({ visibility: 'finished' }); }}
                             disabled={this.state.visibility === 'finished'}
                             block>
                                 Finished
@@ -314,7 +314,7 @@ const App = React.createClass({
     },
     render() {
         return (
-            <Grid fluid={true}>
+            <Grid fluid>
                 <Row>
                     <Col xs={6}>
                         <CallsNext {...this.state} />
