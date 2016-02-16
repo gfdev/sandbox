@@ -10,4 +10,4 @@ $ npm run dev
 $ npm run dist
 ```
 
-## working result is here http://gfdev.github.io/sandbox/test-tasks/2/dist/
+## result is here http://gfdev.github.io/sandbox/test-tasks/javascript/2/dist/

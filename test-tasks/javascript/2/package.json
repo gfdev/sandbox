@@ -1,7 +1,7 @@
 {
   "name": "app",
   "version": "0.0.1",
-  "description": "ReactJS Test Task",
+  "description": "ReactJS",
   "main": "index",
   "scripts": {
     "dist": "rm -rf dist/ && NODE_ENV=production webpack",

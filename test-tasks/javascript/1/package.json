@@ -1,7 +1,7 @@
 {
   "name": "app",
   "version": "0.0.1",
-  "description": "UpsilonIT Test Task",
+  "description": "AngularJS",
   "main": "index.js",
   "scripts": {
     "dist": "rm -rf dist/ && NODE_ENV=production webpack",
