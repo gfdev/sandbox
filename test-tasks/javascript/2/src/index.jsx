@@ -129,17 +129,20 @@ const CallsAdd = React.createClass({
                             <Col xs={6}>
                                 <input type="text"
                                     className="form-control"
+                                    placeholder="John Doe"
                                     valueLink={this.linkState('name')} />
                             </Col>
                             <Col xs={4}>
                                 <input type="text"
                                     className="form-control"
+                                    placeholder="+44 (0) 123 456 7890"
                                     valueLink={this.linkState('phone')} />
                             </Col>
                             <Col xs={2}>
                                 <input type="text"
                                     className="form-control"
-                                    placeholder="mm:ss" valueLink={this.linkState('time')} />
+                                    placeholder="hh:mm"
+                                    valueLink={this.linkState('time')} />
                             </Col>
                         </Input>
                     </Row>
