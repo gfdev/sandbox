@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Front End Test Task</title>
+        <link rel="stylesheet" href="./public/css/main.css">
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="header">
+                <div id="title">Front End Test Task</div>
+            </div>
+            <div id="hr"></div>
+            <div id="content">
+                <div id="page-request" class="center">
+                    <button id="btn-request-data" class="btn btn-big">Request data</button>
+                </div>
+                <div id="page-spinner" class="center">
+                    <img src="./public/img/ajax-loader.gif">
+                </div>
+                <div id="page-select-data">
+                    <div class="subtitle">
+                        Please select data that you want to display:
+                    </div>
+                    <div id="form-checkboxes" class="clearfix">
+                        <ul id="block-checkboxes" class="checkboxes" style="display: none;">
+                            <li>
+                                <input type="checkbox">
+                                <label></label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="color: #1881AD;">
+                        <button id="btn-select-all" class="link">Select All</button>
+                        |
+                        <button id="btn-clear-all" class="link">Clear Selection</button>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <button id="btn-show-data" class="btn">Submit</button>
+                    </div>
+                </div>
+                <div id="page-data">
+                    <button id="btn-back" class="btn btn-small btn-image">Select Data</button>
+                    <img src="./public/img/arrow_back.png">
+                    <span class="subtitle">Here is the data that you have requested:</span>
+                    <table id="table-data">
+                        <thead>
+                            <tr>
+                                <td></td>
+                            </tr> 
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                   </table>
+                </div>
+            </div>
+        </div>
+        <script>window.jQuery || document.write('<script src="http://code.jquery.com/jquery-latest.min.js"><\/script>');</script>
+        <script src="./public/js/jquery.sortElements.js"></script>
+        <script src="./public/js/main.js"></script>
+    </body>
+</html> 
