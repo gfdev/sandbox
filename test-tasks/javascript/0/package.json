@@ -1,0 +1,15 @@
+{
+  "name": "app",
+  "version": "0.0.1",
+  "description": "Front End",
+  "scripts": {
+    "gh-pages": "[ -d \"dist/\" ] && GITROOT=`git rev-parse --show-toplevel` && WD=`pwd` && SUBPATH=\"${WD#$GITROOT/}/dist\" && cd $GITROOT && git push origin :gh-pages && git checkout --orphan gh-pages && git rm -rf . && git checkout master $SUBPATH && git commit --allow-empty-message -a -m '' && git push origin gh-pages && git checkout master && git branch -D gh-pages && cd $WD && unset GITROOT WD SUBPATH"
+  },
+  "author": {
+    "name": "Gordon Freeman",
+    "email": "eax@gmx.us",
+    "url": "https://github.com/gfdev"
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}
