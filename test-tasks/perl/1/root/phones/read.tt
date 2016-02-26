@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Телефонный справочник</title>
+        <link rel="stylesheet" href="/static/main.css" />
+    </head>
+    <body>
+        <div>
+            <form action="[% c.uri_for('/create') %]" method="post">
+                <table class="table" border="1">
+                    <caption class="header">Телефонный справочник</caption>
+                    <tr>
+                        <th>Телефон</th>
+                        <th>ФИО</th>
+                        <th>Адрес</th>
+                        <th>Примечания</th>
+                        <th style="width: 200px;"></th>
+                    </tr>
+                    [% IF phones.size() > 0 %]
+                        [% FOREACH ph IN phones %]
+                            [% FOREACH p IN ph.persons %]
+                                <tr>
+                                    <td>[% ph.phone | html %]</td>
+                                    <td>[% p.name | html %]</td>
+                                    <td>[% p.address | html %]</td>
+                                    <td>[% p.note | html %]</td>
+                                    <td>
+                                        <input type="button" value="Удалить" onclick="if (confirm('Вы точно хотите удалить номер телефона [% ph.phone %]?')) window.location.href='[% c.uri_for('/delete', p.id) %]';" />
+                                        <input type="button" value="Изменить" onclick="window.location.href='[% c.uri_for('/update', p.id) %]';" />
+                                    </td>
+                                </tr>
+                            [% END %]
+                        [% END %]
+                    [% ELSE %]
+                        <tr>
+                            <td colspan="5" style="font-weight: bold; color: red;">Нет записей!</td>
+                        </tr>
+                    [% END %]
+                    <tr>
+                        <td><div class="tip">Напр.: +7 (123) 123-45-67 <span class="required">*</span></div><input type="text" name="phone" value="[% c.req.param('phone') | html %]" /></td>
+                        <td><div class="tip">Напр.: Иванов И. И. <span class="required">*</span></div><input type="text" name="name" value="[% c.req.param('name') | html %]" /></td>
+                        <td><div class="tip">Напр.: ул. Ивановская 1-1 <span class="required">*</span></div><input type="text" name="addr" value="[% c.req.param('addr') | html %]" /></td>
+                        <td><div class="tip">Напр.: Мобильный</div><input type="text" name="note" value="[% c.req.param('note') | html %]" /></td>
+                        <td><input type="submit" value="Добавить" /></td>
+                    </tr>
+                </table>
+                [% IF error %]
+                    <div class="error">[% error %]</div>
+                [% END %]
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Редактировать запись</title>
+        <link rel="stylesheet" href="/static/main.css" />
+    </head>
+    <body>
+        <div>
+            <form action="[% c.uri_for('/update', person.id) %]" method="post">
+                <table class="table" border="1">
+                    <caption class="header">Редактировать запись</caption>
+                    <tr>
+                        <th>Телефон</th>
+                        <th>ФИО</th>
+                        <th>Адрес</th>
+                        <th>Примечания</th>
+                        <th style="width: 200px;"></th>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-size: 1.5em;">[% phone.phone %]</td>
+                        <td>
+                            <div class="tip">Напр.: Иванов И. И. <span class="required">*</span></div>
+                            <input type="text" name="name" value="[% IF error %][% c.req.param('name') | html %][% ELSE %][% person.name | html %][% END %]" />
+                        </td>
+                        <td>
+                            <div class="tip">Напр.: ул. Ивановская 1-1 <span class="required">*</span></div>
+                            <input type="text" name="addr" value="[% IF error %][% c.req.param('addr') | html %][% ELSE %][% person.address | html %][% END %]" />
+                        </td>
+                        <td>
+                            <div class="tip">Напр.: Мобильный</div>
+                            <input type="text" name="note" value="[% IF error %][% c.req.param('note') | html %][% ELSE %][% person.note | html %][% END %]" />
+                        </td>
+                        <td>
+                            <input type="submit" value="Сохранить" />
+                            <input type="button" value="Отмена" onclick="window.location.href='/';" />
+                        </td>
+                    </tr>
+                </table>
+                [% IF error %]
+                    <div class="error">[% error %]</div>
+                [% END %]
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,50 @@
+body {
+    margin: 0 auto;
+    padding: 10px 10%;
+}
+
+input {
+    width: 90px;
+}
+
+input[type=text] {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+}
+
+.table {
+    width: 100%;
+}
+
+.table td {
+    padding: 3px 5px;
+    white-space: nowrap;
+}
+
+.table td:last-child {
+    text-align: center;
+}
+
+.header {
+    padding-bottom: 10px;
+    font-size: 1.3em;
+}
+
+.error {
+    text-align: center;
+    padding: 10px 0;
+    color: red;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.tip {
+    font-size: .8em;
+    color: grey;
+}
+
+.required {
+    color: red;
+}
