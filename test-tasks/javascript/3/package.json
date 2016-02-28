@@ -1,0 +1,47 @@
+{
+  "name": "app",
+  "version": "0.0.1",
+  "description": "ReactJS & Redux (Drag & Drop)",
+  "main": "index",
+  "scripts": {
+    "dist": "rm -rf dist/ && NODE_ENV=production webpack",
+    "build": "rm -rf build/ && webpack",
+    "dev": "webpack-dev-server --inline --hot --watch-poll",
+    "test": "mocha --harmony --require babel-core/register"
+  },
+  "author": {
+    "name": "Gordon Freeman",
+    "email": "eax@gmx.us",
+    "url": "https://github.com/gfdev"
+  },
+  "devDependencies": {
+    "babel-core": "^6.4.5",
+    "babel-eslint": "^5.0.0-beta6",
+    "babel-loader": "^6.2.1",
+    "babel-polyfill": "^6.5.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-0": "^6.5.0",
+    "chai": "^3.4.1",
+    "css-loader": "^0.23.1",
+    "eslint": "^2.2.0",
+    "eslint-loader": "^1.2.0",
+    "eslint-plugin-react": "^4.1.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "html-webpack-plugin": "^2.7.1",
+    "lodash": "^4.5.1",
+    "mocha": "^2.3.4",
+    "postcss-loader": "^0.8.0",
+    "react": "^0.14.7",
+    "react-dnd": "^2.1.2",
+    "react-dnd-html5-backend": "^2.1.2",
+    "react-dom": "^0.14.7",
+    "react-hot-loader": "^1.3.0",
+    "react-redux": "^4.4.0",
+    "redux": "^3.3.1",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {}
+}
