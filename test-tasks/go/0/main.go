@@ -16,7 +16,7 @@ import (
 )
 
 const (
-    DSN             = "host=localhost port=5433 user=test password=test dbname=test sslmode=disable"
+    DSN             = "host=localhost port=5432 user=test password=test dbname=test sslmode=disable"
     //SQL_BALANCE     = "SELECT amount FROM balance WHERE user_id = $1"
     //SQL_CHECK_USER  = "SELECT COUNT(*) FROM balance WHERE user_id = $1"
     //SQL_CHECK_USERS = "SELECT COUNT(*) FROM balance WHERE user_id IN($1, $2)"
