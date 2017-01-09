@@ -1,4 +1,4 @@
-# ReactJS + Redux Test Task (Drug & Drop)
+# ReactJS + Redux Test Task (Drag & Drop)
 
 ## dev server on 3000 port
 ```bash
